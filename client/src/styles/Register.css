@@ -1,0 +1,253 @@
+
+.register-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  background-color: var(--color-background);
+}
+
+/* Left branding panel */
+
+.register-hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 48px 56px;
+  background-color: #f1eee7;
+}
+
+.register-hero .brand,
+.register-form-container .mobile-brand {
+  width: fit-content;
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: -0.8px;
+}
+
+.register-hero .brand span,
+.register-form-container .mobile-brand span {
+  color: var(--color-primary);
+}
+
+.register-hero .hero-content {
+  max-width: 520px;
+  margin: 48px 0;
+}
+
+.register-hero .eyebrow {
+  margin-bottom: 24px;
+  color: var(--color-primary);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.register-hero .hero-content h1 {
+  margin: 0;
+  font-size: clamp(2.8rem, 4.5vw, 4.5rem);
+  line-height: 1.08;
+  letter-spacing: -3px;
+}
+
+.register-hero .hero-content h1 span {
+  color: var(--color-primary);
+}
+
+.register-hero .hero-description {
+  max-width: 390px;
+  margin-top: 24px;
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.register-hero .hero-footer {
+  color: var(--color-text-secondary);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+/* Registration form section */
+
+.register-form-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 32px;
+}
+
+.register-form-container {
+  width: 100%;
+  max-width: 400px;
+}
+
+.register-form-container .mobile-brand {
+  display: none;
+  margin-bottom: 36px;
+}
+
+.register-form-container .form-heading {
+  margin-bottom: 28px;
+}
+
+.register-form-container .form-heading h2 {
+  margin: 0 0 10px;
+  font-size: 2rem;
+  letter-spacing: -1px;
+}
+
+.register-form-container .form-heading p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* Form fields */
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.register-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.register-form .form-group label {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.register-form .form-group input {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  outline: none;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.register-form .form-group input::placeholder {
+  color: #a3a3a3;
+}
+
+.register-form .form-group input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgb(255 90 31 / 12%);
+}
+
+.password-hint {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
+}
+
+/* Submit button */
+
+.register-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--color-primary);
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.register-button:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.register-button:active {
+  transform: scale(0.99);
+}
+
+/* Login link and footer */
+
+.register-form-container .register-prompt {
+  margin-top: 24px;
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.register-form-container .register-prompt a {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.register-form-container .register-prompt a:hover {
+  color: var(--color-primary-hover);
+}
+
+.register-form-container .form-footer {
+  margin-top: 36px;
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+/* Responsive layout */
+
+@media (max-width: 900px) {
+  .register-page {
+    grid-template-columns: 0.85fr 1.15fr;
+  }
+
+  .register-hero {
+    padding: 40px 32px;
+  }
+
+  .register-hero .hero-content h1 {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    letter-spacing: -2px;
+  }
+}
+
+@media (max-width: 650px) {
+  .register-page {
+    grid-template-columns: 1fr;
+  }
+
+  .register-hero {
+    display: none;
+  }
+
+  .register-form-section {
+    min-height: 100vh;
+    padding: 32px 24px;
+  }
+
+  .register-form-container {
+    max-width: 420px;
+  }
+
+  .register-form-container .mobile-brand {
+    display: block;
+  }
+
+  .register-form-container .form-heading h2 {
+    font-size: 1.8rem;
+  }
+
+  .register-form-container .form-footer {
+    margin-top: 28px;
+  }
+}
