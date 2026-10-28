@@ -1,7 +1,53 @@
-import { Link } from "react-router-dom";
+
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../api";
 import "../styles/Login.css";
 
 function Login() {
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+
+    setFormData((previousData) => ({
+      ...previousData,
+      [name]: value,
+    }));
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    setError("");
+    setIsSubmitting(true);
+
+    try {
+      await api.post("/auth/login", {
+        email: formData.email,
+        password: formData.password,
+      });
+
+      // Login succeeded; we'll add shared auth state next.
+      navigate("/");
+    } catch (error) {
+      setError(
+        error.response?.data?.message ||
+          "Unable to sign in. Please try again.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
   return (
     <main className="login-page">
       <section className="login-hero">
@@ -38,7 +84,7 @@ function Login() {
             <p>Enter your details to access your account.</p>
           </div>
 
-          <form className="login-form">
+          <form className="login-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="email">Email address</label>
               <input
@@ -47,6 +93,8 @@ function Login() {
                 name="email"
                 placeholder="you@example.com"
                 autoComplete="email"
+                value={formData.email}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -63,12 +111,25 @@ function Login() {
                 name="password"
                 placeholder="Enter your password"
                 autoComplete="current-password"
+                value={formData.password}
+                onChange={handleChange}
                 required
               />
             </div>
 
-            <button type="submit" className="login-button">
-              Sign in <span aria-hidden="true">→</span>
+            {error && (
+              <p className="form-error" role="alert">
+                {error}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              className="login-button"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Signing in..." : "Sign in"}{" "}
+              <span aria-hidden="true">→</span>
             </button>
           </form>
 

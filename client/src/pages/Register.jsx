@@ -1,7 +1,71 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../api";
 import "../styles/Register.css";
 
 function Register() {
+  const navigate = useNavigate();
+
+  // Store the form values
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  // Store feedback from the server
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Update the relevant field whenever the user types
+  function handleChange(event) {
+    const { name, value } = event.target;
+
+    setFormData((previousData) => ({
+      ...previousData,
+      [name]: value,
+    }));
+  }
+
+  // Submit the registration form
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    setError("");
+    setSuccess("");
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await api.post("/auth/register", {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      setSuccess(response.data.message);
+
+      // Give the user a moment to see the success message
+      setTimeout(() => {
+        navigate("/login");
+      }, 1200);
+    } catch (error) {
+      setError(
+        error.response?.data?.message ||
+          "Unable to create your account. Please try again.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
   return (
     <main className="register-page">
       <section className="register-hero">
@@ -38,7 +102,7 @@ function Register() {
             <p>Join Ignite Sneaks and find your next favorite pair.</p>
           </div>
 
-          <form className="register-form">
+          <form className="register-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="username">Username</label>
               <input
@@ -47,6 +111,12 @@ function Register() {
                 name="username"
                 placeholder="Choose a username"
                 autoComplete="username"
+                value={formData.username}
+                onChange={handleChange}
+                minLength={3}
+                maxLength={30}
+                pattern="[a-zA-Z0-9_]+"
+                title="Use 3–30 letters, numbers, or underscores."
                 required
               />
             </div>
@@ -59,6 +129,9 @@ function Register() {
                 name="email"
                 placeholder="you@example.com"
                 autoComplete="email"
+                maxLength={254}
+                value={formData.email}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -72,6 +145,8 @@ function Register() {
                 placeholder="Create a password"
                 autoComplete="new-password"
                 minLength={8}
+                value={formData.password}
+                onChange={handleChange}
                 required
               />
               <p className="password-hint">Use at least 8 characters.</p>
@@ -86,12 +161,31 @@ function Register() {
                 placeholder="Re-enter your password"
                 autoComplete="new-password"
                 minLength={8}
+                value={formData.confirmPassword}
+                onChange={handleChange}
                 required
               />
             </div>
 
-            <button type="submit" className="register-button">
-              Create account <span aria-hidden="true">→</span>
+            {error && (
+              <p className="form-error" role="alert">
+                {error}
+              </p>
+            )}
+
+            {success && (
+              <p className="form-success" role="status">
+                {success}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              className="register-button"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Creating account..." : "Create account"}{" "}
+              <span aria-hidden="true">→</span>
             </button>
           </form>
 
