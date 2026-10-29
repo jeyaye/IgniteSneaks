@@ -1,11 +1,13 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import api from "../api";
+// import api from "../api";
 import "../styles/Login.css";
+
+import { useAuth } from "../context/useAuth";
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -31,17 +33,15 @@ function Login() {
     setIsSubmitting(true);
 
     try {
-      await api.post("/auth/login", {
+      await login({
         email: formData.email,
         password: formData.password,
       });
 
-      // Login succeeded; we'll add shared auth state next.
       navigate("/");
     } catch (error) {
       setError(
-        error.response?.data?.message ||
-          "Unable to sign in. Please try again.",
+        error.response?.data?.message || "Unable to sign in. Please try again.",
       );
     } finally {
       setIsSubmitting(false);

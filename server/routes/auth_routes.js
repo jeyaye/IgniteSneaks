@@ -168,6 +168,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/me", async (req, res) => {
+  res.set("Cache-Control", "no-store");
   try {
     // Check whether the user has a session
     if (!req.session.userId) {
