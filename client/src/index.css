@@ -167,6 +167,13 @@ a {
   display: block;
 }
 
+.product-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  height: 100%;
+}
+
 /* PRODUCT INFORMATION */
 .product-info {
   padding: 20px;
@@ -212,6 +219,39 @@ a {
   padding: 6px 10px;
   font-size: 0.8rem;
   color: #525252;
+}
+
+.size-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.size-options button {
+  min-width: 55px;
+  padding: 12px;
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.size-options button:hover:not(:disabled) {
+  border-color: #ff5a1f;
+}
+
+.size-options button.selected {
+  background: #ff5a1f;
+  border-color: #ff5a1f;
+  color: #ffffff;
+}
+
+.size-options button:disabled {
+  background: #eeeeee;
+  color: #aaaaaa;
+  cursor: not-allowed;
+  text-decoration: line-through;
 }
 
 @media (max-width: 900px) {

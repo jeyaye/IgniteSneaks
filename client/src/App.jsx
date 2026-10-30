@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 // import Home from "./pages/Home";
 import Shop from "./pages/Shop";
+import ProductDetails from "./pages/ProductDetails";
 
 import Header from "./components/Header";
 
@@ -32,6 +33,11 @@ function AppRoutes() {
       <Route
         path="/register"
         element={user ? <Navigate to="/" replace /> : <Register />}
+      />
+
+      <Route
+        path="/products/:id"
+        element={user ? <ProductDetails /> : <Navigate to="/login" replace />}
       />
     </Routes>
   );
