@@ -68,3 +68,164 @@ a {
   opacity: 0.7;
   cursor: not-allowed;
 }
+
+/* HERO SECTION */
+.hero {
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  padding: 80px 8%;
+  background-color: #171717;
+  color: #ffffff;
+}
+
+.hero-content {
+  max-width: 650px;
+}
+
+.hero-tagline {
+  color: #ff5a1f;
+  font-weight: 700;
+  letter-spacing: 3px;
+  font-size: 0.85rem;
+}
+
+.hero h1 {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1.05;
+  margin: 20px 0;
+  font-weight: 900;
+}
+
+.hero-content > p:not(.hero-tagline) {
+  color: #d4d4d4;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  max-width: 500px;
+}
+
+.hero-button {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 15px 28px;
+  background-color: #ff5a1f;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  transition: background-color 0.2s ease;
+}
+
+.hero-button:hover {
+  background-color: #e84912;
+}
+
+/* SNEAKER COLLECTION */
+.sneakers-section {
+  padding: 70px 8%;
+  background-color: #faf9f6;
+}
+
+.sneakers-section h2 {
+  font-size: 2rem;
+  margin-bottom: 35px;
+  color: #171717;
+}
+
+/* PRODUCT GRID */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 25px;
+}
+
+/* PRODUCT CARD */
+.product-card {
+  background-color: #ffffff;
+  border: 1px solid #e5e5e5;
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* PRODUCT IMAGE */
+.product-image {
+  background-color: #f3f3f3;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* PRODUCT INFORMATION */
+.product-info {
+  padding: 20px;
+}
+
+.product-brand {
+  color: #737373;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.product-info h3 {
+  color: #171717;
+  font-size: 1.1rem;
+  margin: 8px 0;
+}
+
+.product-price {
+  color: #ff5a1f;
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin: 12px 0 20px;
+}
+
+/* AVAILABLE SIZES */
+.product-sizes h4 {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.product-sizes ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.product-sizes li {
+  background-color: #f3f3f3;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  color: #525252;
+}
+
+@media (max-width: 900px) {
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 550px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sneakers-section {
+    padding: 45px 5%;
+  }
+}

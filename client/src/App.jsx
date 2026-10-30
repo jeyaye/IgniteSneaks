@@ -5,7 +5,10 @@ import { useAuth } from "./context/useAuth";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Home from "./pages/Home";
+// import Home from "./pages/Home";
+import Shop from "./pages/Shop";
+
+import Header from "./components/Header";
 
 function AppRoutes() {
   const { user, loading } = useAuth();
@@ -18,7 +21,7 @@ function AppRoutes() {
     <Routes>
       <Route
         path="/"
-        element={user ? <Home /> : <Navigate to="/login" replace />}
+        element={user ? <Shop /> : <Navigate to="/login" replace />}
       />
 
       <Route
@@ -38,6 +41,7 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <Header />
         <AppRoutes />
       </AuthProvider>
     </BrowserRouter>
