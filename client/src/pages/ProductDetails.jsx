@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../api";
 
+import { useCart } from "../context/useCart";
+
 function ProductDetails() {
   const { id } = useParams();
 
@@ -9,6 +11,12 @@ function ProductDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedVariant, setSelectedVariant] = useState(null);
+
+  const { addToCart, cartItems } = useCart();
+
+  useEffect(() => {
+    console.log("Current Cart:", cartItems);
+  }, [cartItems]);
 
   useEffect(() => {
     async function fetchProduct() {
@@ -82,6 +90,14 @@ function ProductDetails() {
           {selectedVariant && (
             <p>Selected Size: {Number(selectedVariant.size).toFixed(1)}</p>
           )}
+
+          <button
+            type="button"
+            disabled={!selectedVariant}
+            onClick={() => addToCart(product, selectedVariant)}
+          >
+            Add to Cart
+          </button>
         </div>
       </section>
     </main>
