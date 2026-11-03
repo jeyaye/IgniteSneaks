@@ -12,11 +12,7 @@ function ProductDetails() {
   const [error, setError] = useState("");
   const [selectedVariant, setSelectedVariant] = useState(null);
 
-  const { addToCart, cartItems } = useCart();
-
-  useEffect(() => {
-    console.log("Current Cart:", cartItems);
-  }, [cartItems]);
+  const { addToCart } = useCart();
 
   useEffect(() => {
     async function fetchProduct() {

@@ -1,16 +1,20 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
+// Context Imports
 import { AuthProvider } from "./context/AuthProvider";
 import { useAuth } from "./context/useAuth";
 import { CartProvider } from "./context/CartProvider";
 
+// Pages
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 // import Home from "./pages/Home";
 import Shop from "./pages/Shop";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 
+// Components
 import Header from "./components/Header";
 
 function AppRoutes() {
@@ -45,6 +49,11 @@ function AppRoutes() {
       <Route
         path="/cart"
         element={user ? <Cart /> : <Navigate to="/login" replace />}
+      />
+
+      <Route
+        path="/checkout"
+        element={user ? <Checkout /> : <Navigate to="/login" replace />}
       />
     </Routes>
   );
