@@ -43,7 +43,14 @@ function Checkout() {
     }));
   }
 
-  console.log("Shipping Information:", shippingInfo);
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    console.log("Shipping Information:", shippingInfo);
+    console.log("Cart Items:", cartItems);
+
+    alert("Shipping information validated successfully!");
+  }
 
   return (
     <main className="checkout-page">
@@ -52,7 +59,7 @@ function Checkout() {
       <section className="shipping-form">
         <h2>Shipping Information</h2>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="recipientName">Full Name</label>
             <input
@@ -124,6 +131,8 @@ function Checkout() {
               required
             />
           </div>
+
+          <button type="submit">Continue to Order Summary</button>
         </form>
       </section>
 
