@@ -15,8 +15,9 @@ function Header() {
 
         {user ? (
           <>
-            <Link to="/cart">Cart</Link>
-            <span>{user.username}</span>
+            <Link to="/cart">Cart   </Link>
+            <Link to="/orders">My Orders    </Link>
+            <span>{user.username}   </span>
             <button onClick={logout}>Logout</button>
           </>
         ) : (

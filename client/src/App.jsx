@@ -13,6 +13,7 @@ import Shop from "./pages/Shop";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
+import OrderHistory from "./pages/OrderHistory";
 
 // Components
 import Header from "./components/Header";
@@ -54,6 +55,11 @@ function AppRoutes() {
       <Route
         path="/checkout"
         element={user ? <Checkout /> : <Navigate to="/login" replace />}
+      />
+
+      <Route
+        path="/orders"
+        element={user ? <OrderHistory /> : <Navigate to="/login" replace />}
       />
     </Routes>
   );

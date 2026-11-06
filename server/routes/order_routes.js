@@ -205,4 +205,69 @@ router.post("/", requireAuth, async (req, res) => {
   }
 });
 
+router.get("/", requireAuth, async (req, res) => {
+  try {
+    const result = await db.query(
+      `SELECT
+         o.order_id,
+         o.status,
+         o.subtotal,
+         o.shipping_fee,
+         o.total,
+         o.recipient_name,
+         o.phone_number,
+         o.street_address,
+         o.city,
+         o.province,
+         o.postal_code,
+         o.created_at,
+
+         COALESCE(
+           JSON_AGG(
+             JSON_BUILD_OBJECT(
+               'order_item_id', oi.order_item_id,
+               'product_id', oi.product_id,
+               'variant_id', oi.variant_id,
+               'name', p.name,
+               'brand', p.brand,
+               'size', pv.size,
+               'quantity', oi.quantity,
+               'unit_price', oi.unit_price
+             )
+             ORDER BY oi.order_item_id
+           ) FILTER (WHERE oi.order_item_id IS NOT NULL),
+           '[]'
+         ) AS items
+
+       FROM orders o
+
+       LEFT JOIN order_items oi
+         ON oi.order_id = o.order_id
+
+       LEFT JOIN products p
+         ON p.product_id = oi.product_id
+
+       LEFT JOIN product_variants pv
+         ON pv.variant_id = oi.variant_id
+
+       WHERE o.user_id = $1
+
+       GROUP BY o.order_id
+
+       ORDER BY o.created_at DESC`,
+      [req.session.userId],
+    );
+
+    return res.status(200).json({
+      orders: result.rows,
+    });
+  } catch (error) {
+    console.error("Fetch order history error:", error);
+
+    return res.status(500).json({
+      message: "Unable to retrieve your order history.",
+    });
+  }
+});
+
 export default router;
