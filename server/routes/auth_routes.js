@@ -4,13 +4,12 @@ import bcrypt from "bcrypt";
 import db from "../db.js";
 
 const router = express.Router();
-
 const saltRounds = 12;
 
 router.post("/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;
-
+    
     // Validate required fields
     if (
       typeof username !== "string" ||
