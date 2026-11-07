@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api";
 
+import "../styles/order-history.css";
+
 function OrderHistory() {
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

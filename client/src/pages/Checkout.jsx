@@ -1,9 +1,10 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/useCart";
 import { useAuth } from "../context/useAuth";
 import api from "../api";
+
+import "../styles/checkout.css";
 
 function Checkout() {
   const { cartItems, clearCart } = useCart();
@@ -219,9 +220,7 @@ function Checkout() {
             <div className="checkout-error" role="alert">
               <p>{errorMessage}</p>
 
-              {sessionExpired && (
-                <Link to="/login">Go to Login</Link>
-              )}
+              {sessionExpired && <Link to="/login">Go to Login</Link>}
             </div>
           )}
 

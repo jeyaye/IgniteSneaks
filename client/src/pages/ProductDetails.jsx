@@ -4,6 +4,8 @@ import api from "../api";
 
 import { useCart } from "../context/useCart";
 
+import "../styles/product-details.css";
+
 function ProductDetails() {
   const { id } = useParams();
 

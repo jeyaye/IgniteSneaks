@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 
+import "../styles/header.css";
+
 function Header() {
   const { user, logout } = useAuth();
 
   return (
     <header className="site-header">
       <Link to="/" className="logo">
-        IGNITE SNEAKS
+        IGNITE <span>SNEAKS</span>
       </Link>
 
       <nav>
@@ -15,10 +17,14 @@ function Header() {
 
         {user ? (
           <>
-            <Link to="/cart">Cart   </Link>
-            <Link to="/orders">My Orders    </Link>
-            <span>{user.username}   </span>
-            <button onClick={logout}>Logout</button>
+            <Link to="/cart">Cart</Link>
+            <Link to="/orders">My Orders</Link>
+
+            <span className="header-username">{user.username}</span>
+
+            <button className="logout-button" onClick={logout}>
+              Logout
+            </button>
           </>
         ) : (
           <>

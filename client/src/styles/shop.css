@@ -1,0 +1,232 @@
+/* HERO SECTION */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 480px;
+  padding: 80px 8%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 85% 45%, rgb(255 90 31 / 12%), transparent 32%),
+    var(--color-surface-secondary);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 680px;
+}
+
+.hero-tagline {
+  margin-bottom: 18px;
+  color: var(--color-primary);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+}
+
+.hero h1 {
+  max-width: 650px;
+  margin-bottom: 20px;
+  font-size: clamp(2.6rem, 5vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -2.5px;
+}
+
+.hero-content > p:not(.hero-tagline) {
+  max-width: 520px;
+  margin-bottom: 30px;
+  color: var(--color-text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.hero-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  padding: 0 26px;
+  color: #fff;
+  background-color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.hero-button:hover {
+  background-color: var(--color-primary-hover);
+  transform: translateY(-2px);
+}
+
+/* COLLECTION SECTION */
+.sneakers-section {
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 72px 32px 90px;
+}
+
+.sneakers-section h2 {
+  margin-bottom: 28px;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+}
+
+/* SEARCH AND FILTER CONTROLS */
+.shop-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 18px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.shop-controls input[type="search"],
+.shop-controls select {
+  min-width: 0;
+  height: 44px;
+  padding: 0 13px;
+  color: var(--color-text);
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  outline: none;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.shop-controls input[type="search"] {
+  flex: 1.5;
+}
+
+.shop-controls select {
+  flex: 1;
+  cursor: pointer;
+}
+
+.shop-controls input:focus,
+.shop-controls select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgb(255 90 31 / 10%);
+}
+
+.shop-controls label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.shop-controls input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+/* PRODUCT COUNT AND EMPTY STATE */
+.sneakers-section > p {
+  margin-bottom: 20px;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+
+/* PRODUCT GRID */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .hero {
+    min-height: 420px;
+    padding: 70px 6%;
+  }
+
+  .sneakers-section {
+    padding: 56px 24px 72px;
+  }
+
+  .shop-controls {
+    flex-wrap: wrap;
+  }
+
+  .shop-controls input[type="search"] {
+    flex-basis: 100%;
+  }
+
+  .shop-controls select {
+    flex: 1;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    min-height: 390px;
+    padding: 60px 6%;
+  }
+
+  .hero h1 {
+    font-size: 2.6rem;
+    letter-spacing: -1.5px;
+  }
+
+  .hero-content > p:not(.hero-tagline) {
+    font-size: 0.95rem;
+  }
+
+  .sneakers-section {
+    padding: 44px 16px 60px;
+  }
+
+  .sneakers-section h2 {
+    font-size: 1.7rem;
+  }
+
+  .shop-controls {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 14px;
+  }
+
+  .shop-controls input[type="search"],
+  .shop-controls select {
+    width: 100%;
+    flex: none;
+  }
+
+  .shop-controls label {
+    padding: 4px 0;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
