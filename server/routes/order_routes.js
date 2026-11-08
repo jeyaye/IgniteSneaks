@@ -205,6 +205,111 @@ router.post("/", requireAuth, async (req, res) => {
   }
 });
 
+router.patch("/:orderId/cancel", requireAuth, async (req, res) => {
+  const orderId = Number(req.params.orderId);
+
+  // Validate order ID.
+  if (!Number.isInteger(orderId) || orderId <= 0) {
+    return res.status(400).json({
+      message: "Invalid order ID.",
+    });
+  }
+
+  const client = await db.connect();
+  let transactionStarted = false;
+
+  try {
+    await client.query("BEGIN");
+    transactionStarted = true;
+
+    // Find the order and lock it to prevent simultaneous cancellations.
+    const orderResult = await client.query(
+      `SELECT order_id, status
+       FROM orders
+       WHERE order_id = $1
+         AND user_id = $2
+       FOR UPDATE`,
+      [orderId, req.session.userId],
+    );
+
+    // The order must belong to the logged-in customer.
+    if (orderResult.rows.length === 0) {
+      await client.query("ROLLBACK");
+      transactionStarted = false;
+
+      return res.status(404).json({
+        message: "Order not found.",
+      });
+    }
+
+    const order = orderResult.rows[0];
+
+    // Only pending and processing orders can be cancelled.
+    if (!["pending", "processing"].includes(order.status)) {
+      await client.query("ROLLBACK");
+      transactionStarted = false;
+
+      return res.status(409).json({
+        message: "This order can no longer be cancelled.",
+      });
+    }
+
+    // Lock all product variants belonging to this order.
+    await client.query(
+      `SELECT pv.variant_id
+       FROM order_items oi
+       JOIN product_variants pv
+         ON pv.variant_id = oi.variant_id
+       WHERE oi.order_id = $1
+       FOR UPDATE OF pv`,
+      [orderId],
+    );
+
+    // Restore the stock deducted when the order was placed.
+    await client.query(
+      `UPDATE product_variants pv
+       SET stock_quantity = pv.stock_quantity + oi.quantity
+       FROM order_items oi
+       WHERE oi.order_id = $1
+         AND oi.variant_id = pv.variant_id`,
+      [orderId],
+    );
+
+    // Update the order status.
+    const updatedOrder = await client.query(
+      `UPDATE orders
+       SET status = 'cancelled'
+       WHERE order_id = $1
+       RETURNING order_id, status`,
+      [orderId],
+    );
+
+    await client.query("COMMIT");
+    transactionStarted = false;
+
+    return res.status(200).json({
+      message: "Order cancelled successfully.",
+      order: updatedOrder.rows[0],
+    });
+  } catch (error) {
+    if (transactionStarted) {
+      try {
+        await client.query("ROLLBACK");
+      } catch (rollbackError) {
+        console.error("Order cancellation rollback error:", rollbackError);
+      }
+    }
+
+    console.error("Cancel order error:", error);
+
+    return res.status(500).json({
+      message: "Unable to cancel your order.",
+    });
+  } finally {
+    client.release();
+  }
+});
+
 router.get("/", requireAuth, async (req, res) => {
   try {
     const result = await db.query(
