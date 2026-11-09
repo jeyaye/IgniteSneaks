@@ -8,12 +8,12 @@ import { CartProvider } from "./context/CartProvider";
 // Pages
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-// import Home from "./pages/Home";
 import Shop from "./pages/Shop";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import OrderHistory from "./pages/OrderHistory";
+import AdminDashboard from "./pages/AdminDashboard";
 
 // Components
 import Header from "./components/Header";
@@ -60,6 +60,19 @@ function AppRoutes() {
       <Route
         path="/orders"
         element={user ? <OrderHistory /> : <Navigate to="/login" replace />}
+      />
+
+      <Route
+        path="/admin"
+        element={
+          !user ? (
+            <Navigate to="/login" replace />
+          ) : user.role !== "admin" ? (
+            <Navigate to="/" replace />
+          ) : (
+            <AdminDashboard />
+          )
+        }
       />
     </Routes>
   );

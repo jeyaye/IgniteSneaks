@@ -9,7 +9,7 @@ const saltRounds = 12;
 router.post("/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;
-    
+
     // Validate required fields
     if (
       typeof username !== "string" ||
@@ -109,7 +109,7 @@ router.post("/login", async (req, res) => {
 
     // Find the user by email
     const result = await db.query(
-      `SELECT user_id, username, email, password_hash
+      `SELECT user_id, username, email, password_hash, role
        FROM users
        WHERE LOWER(email) = $1`,
       [normalizedEmail],
@@ -153,6 +153,7 @@ router.post("/login", async (req, res) => {
             user_id: user.user_id,
             username: user.username,
             email: user.email,
+            role: user.role,
           },
         });
       });
@@ -178,7 +179,7 @@ router.get("/me", async (req, res) => {
 
     // Retrieve the current user from the database
     const result = await db.query(
-      `SELECT user_id, username, email
+      `SELECT user_id, username, email, role
        FROM users
        WHERE user_id = $1`,
       [req.session.userId],

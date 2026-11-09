@@ -20,6 +20,12 @@ function Header() {
             <Link to="/cart">Cart</Link>
             <Link to="/orders">My Orders</Link>
 
+            {user.role === "admin" && (
+              <Link to="/admin" className="admin-nav-link">
+                Admin Dashboard
+              </Link>
+            )}
+
             <span className="header-username">{user.username}</span>
 
             <button className="logout-button" onClick={logout}>

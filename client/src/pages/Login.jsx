@@ -102,7 +102,7 @@ function Login() {
             <div className="form-group">
               <div className="password-label">
                 <label htmlFor="password">Password</label>
-                <Link to="/forgot-password">Forgot password?</Link>
+                {/* <Link to="/forgot-password">Forgot password?</Link> */}
               </div>
 
               <input

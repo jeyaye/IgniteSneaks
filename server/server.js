@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth_routes.js";
 import productRoutes from "./routes/product_routes.js";
 import orderRoutes from "./routes/order_routes.js";
+import adminRoutes from "./routes/admin_routes.js";
 
 import db from "./db.js";
 
@@ -49,6 +50,7 @@ app.use(
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({
