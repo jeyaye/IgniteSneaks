@@ -30,22 +30,48 @@
   font-weight: 800;
 }
 
-.order-card > p:nth-of-type(1) {
+.order-card > p:nth-of-type(2) {
+  margin-bottom: 24px;
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+}
+
+/* ORDER STATUS */
+.order-status {
   display: inline-flex;
+  align-items: center;
+  width: fit-content;
   margin: 0 12px 8px 0;
   padding: 6px 12px;
-  color: var(--color-primary);
-  background-color: rgb(255 90 31 / 10%);
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: 800;
   text-transform: capitalize;
 }
 
-.order-card > p:nth-of-type(2) {
-  margin-bottom: 24px;
-  color: var(--color-text-secondary);
-  font-size: 0.85rem;
+.status-pending {
+  color: #946200;
+  background-color: #fff3cd;
+}
+
+.status-processing {
+  color: #155e9a;
+  background-color: #dbeafe;
+}
+
+.status-shipped {
+  color: #6941a5;
+  background-color: #ede3ff;
+}
+
+.status-delivered {
+  color: #237a43;
+  background-color: #dcfce7;
+}
+
+.status-cancelled {
+  color: #b42318;
+  background-color: #fee4e2;
 }
 
 /* SECTION HEADINGS */
@@ -172,4 +198,32 @@
   .order-item h4 {
     grid-column: 1;
   }
+}
+
+/* CANCEL ORDER BUTTON */
+.cancel-order-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  margin: 4px 0 12px;
+  padding: 0 18px;
+  color: #fff;
+  background-color: var(--color-error);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  font-weight: 700;
+  transition:
+    background-color var(--transition-fast),
+    opacity var(--transition-fast);
+}
+
+.cancel-order-button:hover:not(:disabled) {
+  background-color: #a91f1f;
+}
+
+.cancel-order-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
